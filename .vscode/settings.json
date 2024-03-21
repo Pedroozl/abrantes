@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "*.ejs": "html",
+        ".env.*": "dotenv",
+        ".prettierrc": "json",
+        "*.css": "css",
+        "string.h": "c",
+        "stdio.h": "c",
+        "stdlib.h": "c"
+    }
+}
