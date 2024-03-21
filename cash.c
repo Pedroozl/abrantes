@@ -20,23 +20,122 @@
 // Comece aqui seu programa.
 
 #include <stdio.h>
-#include <string.h>
+#include <stdlib.h>
 
 int get_troco();
+int calcular_moedas50();
+int calcular_moedas25();
+int calcular_moedas10();
+int calcular_moedas05();
+int calcular_moedas01();
 
 int main()
 {
-    int restant = get_troco();
+    int troco = get_troco();
+    printf("%i\n", troco);
+    return 0;
 }
 
 int get_troco()
 {
-    int restant;
-    printf("Informe o troco devido (em centavos): ");
-    scanf("%i", &restant);
-    if (restant > 0 && restant <= 99) 
+    int value;
+    char buffer[1024];
+    do 
     {
-        return restant;
-    } 
-    return get_troco();
+        printf("Informe o troco devido (em centavos): ");
+        if (fgets(buffer, 1024, stdin)) // le o buffer de entrada do terminal
+        {
+            value = atoi(buffer);
+        }
+    }
+    while (value < 0 || value > 99);
+
+    int restant; 
+    int coins = 0;
+    restant = value;
+    while (restant != 0 && restant > 0)
+    {
+        if (restant >= 50) 
+        {
+            int r = calcular_moedas50(restant);
+            coins += r;
+            restant -= (50 * coins);
+        } 
+        else if (restant < 50 && restant >= 25) 
+        {
+            int r = calcular_moedas25(restant);
+            coins += r;
+            restant -= (25 * r);
+        }
+        else if (restant < 25 && restant >= 10) 
+        {
+            int r = calcular_moedas10(restant);
+            coins += r;
+            restant -= (10 * r);
+        }
+        else if (restant < 10 && restant >= 5) 
+        {
+            int r = calcular_moedas05(restant);
+            coins += r;
+            restant -= (05 * r);
+        }
+        else if (restant < 5 && restant == 1 && restant > 0) 
+        {
+            int r = calcular_moedas01(restant);
+            coins += r;
+            restant -= r;
+        }
+    }
+    
+    return coins;
+}
+
+int calcular_moedas50(int restant)
+{
+    int coins = 0;
+    for (int i = 0; i < (restant / 50); i++)
+    {
+        coins += 1;
+    }
+    return coins;
+}
+
+int calcular_moedas25(int restant)
+{
+    int coins = 0;
+    for (int i = 0; i < (restant / 25); i++)
+    {
+        coins++;
+    }
+    return coins;
+}
+
+int calcular_moedas10(int restant)
+{
+    int coins = 0;;
+    for (int i = 0; i < (restant / 10); i++)
+    {
+        coins++;
+    }
+    return coins;
+}
+
+int calcular_moedas05(int restant)
+{
+    int coins = 0;
+    for (int i = 0; i < (restant / 5); i++)
+    {
+        coins++;
+    }
+    return coins;
+}
+
+int calcular_moedas01(int restant)
+{
+    int coins = 0;
+    for (int i = 0; i < restant; i++)
+    {
+        coins++;
+    }
+    return coins;
 }
